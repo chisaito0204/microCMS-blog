@@ -2,10 +2,10 @@
   The CSS in this style tag is based off of Bear Blog's default CSS.
   https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
- */
+ */	
 
 :root {
-	--accent: #2337ff;
+	--accent: #fb923c;
 	--accent-dark: #000d8a;
 	--black: 15, 18, 25;
 	--gray: 96, 115, 159;
@@ -29,12 +29,13 @@
 	font-style: normal;
 	font-display: swap;
 }
+
 body {
 	font-family: 'Atkinson', sans-serif;
 	margin: 0;
 	padding: 0;
 	text-align: left;
-	background: linear-gradient(var(--gray-gradient)) no-repeat;
+	background: #fff7ed no-repeat;
 	background-size: 100% 600px;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
@@ -43,7 +44,7 @@ body {
 	line-height: 1.7;
 }
 main {
-	width: 720px;
+	width: 820px;
 	max-width: calc(100% - 2em);
 	margin: auto;
 	padding: 3em 1em;
@@ -151,4 +152,90 @@ hr {
 	clip-path: inset(50%);
 	/* added line to stop words getting smushed together (as they go onto seperate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
+}
+
+/* ヘッダー */
+header {
+	margin: 0;
+	padding: 0 1em;
+	background: white;
+	box-shadow: 0 2px 8px rgba(var(--black), 5%);
+}
+h2 {
+	margin: 0;
+	font-size: 1em;
+}
+
+h2 a,
+h2 a.active {
+	text-decoration: none;
+}
+nav {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+nav a {
+	padding: 1em 0.5em;
+	color: var(--black);
+	border-bottom: 4px solid transparent;
+	text-decoration: none;
+	font-weight: 600;
+}
+nav a.active {
+	text-decoration: none;
+	border-bottom-color: var(--accent);
+}
+.social-links,
+.social-links a {
+	display: flex;
+}
+@media (max-width: 720px) {
+	.social-links {
+		display: none;
+	}
+}
+/* フッター */
+footer {
+	padding: 2em 1em 6em 1em;
+	background: #fee2e2 no-repeat;
+	color: #a3a3a3;
+	text-align: center;
+}
+.social-links {
+	display: flex;
+	justify-content: center;
+	gap: 1em;
+}
+.social-links a {
+	text-decoration: none;
+	color: #737373;
+}
+.social-links a:hover {
+	color: rgb(var(--gray-dark));
+}
+
+/* ダークモード */
+html.dark body{
+	background-color: rgb(var(--gray-dark));
+	color: #fff;
+}
+html.dark header{
+	background: #111827;
+}
+html.dark footer{
+	background: #111827;
+	color: #fff;
+}
+html.dark header nav a{
+	color: #fff;
+}
+html.dark .social-links a{
+	color: #fff;
+}
+html.dark h1, h2, h3, h4, h5, h6{
+	color: #fff;
+}
+h1, h2, h3, h4, h5, h6{
+	color: rgb(var(--black));
 }

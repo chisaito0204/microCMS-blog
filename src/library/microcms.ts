@@ -17,6 +17,10 @@ export type Blog = {
     height: number;
     width: number;
   };
+  category: {
+    url: string;
+    name: string;
+  };
 };
 export type BlogResponse = {
   totalCount: number;
@@ -37,5 +41,21 @@ export const getBlogDetail = async (
     contentId,
     queries,
   });
+};
+
+export type Keiba = {
+  race: string;
+  bet: number;
+  refund: number;
+};
+export type KeibaResponse = {
+  totalCount: number;
+  offset: number;
+  limit: number;
+  contents: Keiba[];
+};
+
+export const getKeiba = async (queries?: MicroCMSQueries) => {
+  return await client.get<KeibaResponse>({ endpoint: "keiba", queries });
 };
 

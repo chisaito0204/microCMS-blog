@@ -1,0 +1,60 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+
+// const posts = (await getCollection('blog')).sort(
+// 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+// );
+//microCMS呼び出し
+import { getKeiba } from "../library/microcms";
+const { contents: racings } = await getKeiba({
+	fields: ["race", "bet", "refund"],
+});
+let totalBet = 0;
+let totalRefund = 0;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section>
+				{
+					racings.slice().reverse().map((racing) => {
+					  // 賭け金を合計に追加
+					  totalBet += racing.bet;
+					  totalRefund += racing.refund;
+				  
+					  return (
+						<div>
+						  <p class="text-lg font-semibold">{racing.race}</p>
+						  <div class="flex gap-5">
+							<p class="text-base">賭け金：{racing.bet}</p>
+							<p class="text-base">払い戻し金額：{racing.refund}</p>
+						  </div>
+						</div>
+					  );
+					})
+				  }
+
+
+				<div>
+					<p>TOTAL：</p>
+					<div class="flex">
+						<p>{totalRefund}&nbsp;</p> ÷ <p>&nbsp;{totalBet}</p> 
+					</div>
+				</div>
+				<h2 class="text-2xl font-semibold text-gray-900 dark:text-white">
+					回収率 = <span>{ ( totalRefund / totalBet) * 100}</span>%
+				</h2>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
