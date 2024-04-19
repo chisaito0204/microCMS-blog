@@ -18,10 +18,10 @@ const { contents: posts } = await getBlogs({
 	<body>
 		<Header />
 		<main>
-			<h1 class="p-8 text-center text-pink-500">🐹 Hello World</h1>
+			<h1 class="md:p-8 text-center text-pink-500">🐹 Hello World</h1>
 
-			<div class="flex gap-10 items-start">
-				<ul class="basis-2/3">
+			<div class="md:flex gap-10 items-start">
+				<ul class="basis-2/3 mb-5 sm:mb-0">
 					{
 						posts.slice(0, 3).map((post) => (
 							<li class="p-5 bg-white mb-3.5 rounded-lg shadow dark:bg-gray-900">

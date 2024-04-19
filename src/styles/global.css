@@ -88,7 +88,12 @@ p {
 	margin-bottom: 1em;
 }
 .prose p {
-	margin-bottom: 2em;
+	margin-bottom: 1.5em;
+}
+@media (max-width: 768px) {
+.prose p{
+	margin-bottom: 1em;
+}
 }
 textarea {
 	width: 100%;
@@ -238,4 +243,32 @@ html.dark h1, h2, h3, h4, h5, h6{
 }
 h1, h2, h3, h4, h5, h6{
 	color: rgb(var(--black));
+}
+
+@media (max-width: 768px) {
+h1{
+	font-size: 36px;
+}
+}
+
+.sp{
+	display: none;
+}
+@media (max-width: 768px) {
+.pc{
+	display: none;
+ }
+}
+
+article{
+	margin-top: 40px;
+}
+article h1{
+	font-size: 40px;
+}
+@media (max-width: 768px) {
+article{
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
 }
