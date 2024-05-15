@@ -1,0 +1,75 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import { createClient } from "microcms-js-sdk";
+import type { GetStaticPaths } from "astro";
+import { getBlogs } from "../../library/microcms";
+// import type { GetStaticPathsOptions } from 'astro';
+
+const { contents: posts } = await getBlogs({
+  fields: ["id", "title", "publishedAt", "content", "category"],
+});
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const client = createClient({
+    serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN,
+    apiKey: import.meta.env.MICROCMS_API_KEY,
+  });
+  const posts = await client.getAllContents({
+    endpoint: "blogs",
+  });
+
+  return paginate(posts, { pageSize: 5 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <p>記事一覧</p>
+
+      <ul>
+        {
+          page.data.map((post) => (
+            <li class="p-5 bg-white mb-3.5 rounded-lg shadow dark:bg-gray-900">
+              <a href={`/blog/${post.id}`} class="block">
+                {post.title}
+              </a>
+              <p class="flex items-center">
+                <time datetime={post.publishedAt}>
+                  {new Date(post.publishedAt).toLocaleDateString("ja-JP")}
+                </time>
+                <span class="p-1 bg-orange-400 text-white text-sm rounded-md ml-2">
+                  {post.category?.name}
+                </span>
+              </p>
+              <span
+                class="line-clamp-1 text-sm font-normal"
+                set:html={post.content}
+              />
+            </li>
+          ))
+        }
+      </ul>
+
+      <nav>
+        <p>
+          {page.url.prev && <a href={page.url.prev}>prev</a>}
+          {page.url.prev && page.url.next && <span class="mx-4">|</span>}
+          {page.url.next && <a href={page.url.next}>next</a>}
+        </p>
+        <p>page {page.currentPage}/{page.lastPage}</p>
+      </nav>
+    </main>
+    <Footer />
+  </body>
+</html>

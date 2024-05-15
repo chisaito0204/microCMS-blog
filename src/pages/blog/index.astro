@@ -9,7 +9,10 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 // );
 //microCMS
 import { getBlogs } from "../../library/microcms";
-const { contents: posts } = await getBlogs({ fields: ["id", "title", "publishedAt", "content", "category"] });
+
+// const { contents: posts } = await getBlogs({ fields: ["id", "title", "publishedAt", "content", "category"] });
+const data = await getBlogs({ limit: 100 });
+const posts = data.contents;
 ---
 
 <!doctype html>
