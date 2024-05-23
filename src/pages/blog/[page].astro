@@ -5,12 +5,8 @@ import Footer from "../../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import { createClient } from "microcms-js-sdk";
 import type { GetStaticPaths } from "astro";
-import { getBlogs } from "../../library/microcms";
+// import { getBlogs } from "../../library/microcms";
 // import type { GetStaticPathsOptions } from 'astro';
-
-const { contents: posts } = await getBlogs({
-  fields: ["id", "title", "publishedAt", "content", "category"],
-});
 
 export const getStaticPaths = (async ({ paginate }) => {
   const client = createClient({
